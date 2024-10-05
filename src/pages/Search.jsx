@@ -5,6 +5,7 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Results from "../components/Results";
 
 const Search = () => {
   const location = useLocation();
@@ -42,35 +43,13 @@ const Search = () => {
     <div>
       <header>
         <Nav />
-        <SearchBar placeholder="Search over 150,000 news sources and blogs" />
       </header>
       {loading ? (
         <div className="spinner">
           <FontAwesomeIcon icon={faSpinner} spin size="6x" />
         </div>
       ) : (
-        <section className="results">
-          <div className="results__list">
-            {articles.map(
-              (article) =>
-              ( <>
-                  <Link
-                    to={`${article._id}`}
-                    key={article._id}
-                    className="article__card"
-                  >
-                    {" "}
-                    <img src={article.media} alt={article.title} />
-                    <div className="article__description">
-                      <p>{article.clean_url}</p>
-                      <h2>{article.title}</h2>
-                    </div>
-                  </Link>
-                  </>
-                )
-            )}
-          </div>
-        </section>
+        <Results articles={articles} />
       )}
     </div>
   );
