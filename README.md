@@ -1,3 +1,5 @@
+A news app built using the Newscatcher Free News API at https://www.newscatcherapi.com/. Deployed live on Vercel.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
