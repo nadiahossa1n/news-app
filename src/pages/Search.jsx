@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/logo.jpg";
 import axios from "axios";
 import Nav from "../components/Nav";
 import { useParams, useLocation, Link } from "react-router-dom";
@@ -12,19 +11,32 @@ const Search = () => {
   const { id } = useParams();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  async function fetchArticles() {
-    const { data } = await axios.get(
-      `https://newsapi.org/v2/everything?q=${id}&apiKey=9adf239aadb94664a0d82c31b81e586a`
-    );
-    setArticles(data.articles);
-    setLoading(false);
-  }
 
   useEffect(() => {
+    async function fetchArticles() {
+      const options = {
+        params: { q: id, lang: 'en', sort_by: 'relevancy', page: '1' },
+        headers: {
+          'x-api-key': 'JDJuB_4CSXHzJnj2JpwGfa0HMc0ByBQTnLKQrqjuwDk',
+        }
+      };
+    
+      try {
+        const response = await axios.get('https://api.newscatcherapi.com/v2/search', options);
+        setArticles(response.data.articles || []);
+        console.log(response.data.articles);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    setLoading(false);
     setLoading(true);
     fetchArticles();
-  }, [location]);
+  }, [location, id]);
 
   return (
     <div>
@@ -41,20 +53,20 @@ const Search = () => {
           <div className="results__list">
             {articles.map(
               (article) =>
-                article.title !== "[Removed]" &&
-                article.urlToImage != null && (
+              ( <>
                   <Link
-                    to={`${article.url}`}
-                    key={article.url}
+                    to={`${article._id}`}
+                    key={article._id}
                     className="article__card"
                   >
                     {" "}
-                    <img src={article.urlToImage} alt={article.title} />
+                    <img src={article.media} alt={article.title} />
                     <div className="article__description">
-                      <p>{article.source.name}</p>
+                      <p>{article.clean_url}</p>
                       <h2>{article.title}</h2>
                     </div>
                   </Link>
+                  </>
                 )
             )}
           </div>
