@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 * {
 margin: 0;
 padding: 0;
 font-family: "roboto mono", sans-serif;
-color: black;
+box-sizing: border-box;
 }
 
 button {
@@ -18,11 +19,7 @@ button {
 
 a {
   text-decoration: none;
-}
-
-a:hover{
-  text-decoration: underline;
-  color: white;
+  color: inherit;
 }
 
 li{
@@ -65,11 +62,12 @@ button:active {
 .logo {
   width: 40px;
   padding-right: 8px;
+  color: black;
 }
 
 .heading{
   text-align: center;
-  padding: 12px 8px;
+  padding: 12px 8px 0;
   font-size: 24px;
   gap: 12px;
   width: 100%;
@@ -94,7 +92,7 @@ button:active {
 }
 
 .search__bar__input {
-  color: white;
+  color: black;
   width: 100%;
   height: 52px;
   font-size: 20px;
@@ -106,6 +104,7 @@ button:active {
 
 .search__bar__input::placeholder {
   color: #bcbcbc;
+  font-size: large;
 }
 
 .search__bar__input:focus {
@@ -118,10 +117,9 @@ button:active {
 }
 
 .search__bar__img {
-  width: 32px;
+  width: 40px;
   position: absolute;
   padding-right: 20px;
-  color: #ff3a44;
 }
 
 .search__bar__img:hover{
@@ -131,6 +129,15 @@ button:active {
 .topics {
   display: flex;
   justify-content: space-between;
+}
+
+.parameters {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+  padding: 20px 28px 0 0;
+  width: 100%;
+  max-width: 1080px;
 }
 
 .spinner{
@@ -143,16 +150,15 @@ button:active {
 .results__list {
   padding:  20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  max-width: 992px;
+  gap: 20px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .article__card {
   width: 100%;
   align-items: center;
-  justify-content: center;
+  display: flex;
   border-radius: 8px;
   border: 1px solid lightgray;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
@@ -162,14 +168,51 @@ button:active {
 
 .article__card img{
   width: 100%;
+  max-width: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  padding: 4px;
 }
 
 .article__description{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 8px;
   color: white;
-  padding: 8px;
+  padding: 16px;
+}
+
+.article__description h2 {
+  font-family: roboto;
+  color: #333;
+  font-size: 24px;
+  margin: 0;
+}
+
+.article__description p {
+  font-family: roboto;
+  color: #333;
+  font-size: 16px;
+}
+
+.date {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+}
+
+.article__link {
+  font-size: 16px;
+  color: #ff3a44;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.article__link:hover {
+  color: #ff6028;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {

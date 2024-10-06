@@ -7,18 +7,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Results from "../components/Results";
 
+const formatDate = (date) => {
+  return date ? date.split('-').join('/') : '';
+};
+
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(today.getDate()).padStart(2, '0');
+  
+  return `${year}/${month}/${day}`;
+};
+
 const Search = () => {
   const location = useLocation();
   const { id } = useParams();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sort, setSort] = useState('relevancy');
+  const [from, setFrom] = useState('2019/01/01')
+  const [to, setTo] = useState(getTodayDate())
 
 
   useEffect(() => {
     async function fetchArticles() {
       const options = {
-        params: { q: id, lang: 'en', sort_by: 'relevancy', page: '1' },
+        params: { q: id, lang: 'en', sort_by: sort, from: formatDate(from), to: formatDate(to), page: '1' },
         headers: {
           'x-api-key': 'JDJuB_4CSXHzJnj2JpwGfa0HMc0ByBQTnLKQrqjuwDk',
         }
@@ -37,13 +53,27 @@ const Search = () => {
     setLoading(false);
     setLoading(true);
     fetchArticles();
-  }, [location, id]);
+  }, [location, id, sort, from, to]);
 
   return (
     <div>
       <header>
         <Nav />
       </header>
+        <div className="parameters">
+        <div>
+          From&nbsp;
+        <input type="date" onChange={(e) => setFrom(e.target.value)} />
+        &nbsp;To&nbsp;
+        <input type="date" onChange={(e) => setTo(e.target.value)} />
+        &nbsp;Sort by&nbsp;
+        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="relevancy">Relevance</option>
+          <option value="date">Most Recent</option>
+          <option value="rank">Source Rank</option>
+        </select>
+        </div>
+        </div>
       {loading ? (
         <div className="spinner">
           <FontAwesomeIcon icon={faSpinner} spin size="6x" />
