@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Results from "../components/Results";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +26,6 @@ const Home = () => {
           options
         );
         setArticles(response.data.articles || []);
-        console.log(response.data.articles);
       } catch (error) {
         setError(error);
       } finally {
@@ -40,7 +38,11 @@ const Home = () => {
   }, [topic]);
 
   const handleTopicClick = (newTopic) => {
-    setTopic(newTopic); // Update the topic state
+    setTopic(newTopic);
+  };
+
+  const handleSelectChange = (e) => {
+    setTopic(e.target.value);
   };
 
   return (
@@ -58,28 +60,51 @@ const Home = () => {
             </button>
           </li>
           <li>
-            <button onClick={() => handleTopicClick("business")}
-              style={{ fontWeight: topic === "business" ? "bold" : "normal" }}>
+            <button
+              onClick={() => handleTopicClick("business")}
+              style={{ fontWeight: topic === "business" ? "bold" : "normal" }}
+            >
               Business
             </button>
           </li>
           <li>
-            <button onClick={() => handleTopicClick("entertainment")}
-              style={{ fontWeight: topic === "entertainment" ? "bold" : "normal" }}>
+            <button
+              onClick={() => handleTopicClick("entertainment")}
+              style={{
+                fontWeight: topic === "entertainment" ? "bold" : "normal",
+              }}
+            >
               Entertainment
             </button>
           </li>
           <li>
-            <button onClick={() => handleTopicClick("tech")}
+            <button
+              onClick={() => handleTopicClick("tech")}
               style={{ fontWeight: topic === "tech" ? "bold" : "normal" }}
-              >Technology</button>
+            >
+              Technology
+            </button>
           </li>
           <li>
-            <button onClick={() => handleTopicClick("sport")}
+            <button
+              onClick={() => handleTopicClick("sport")}
               style={{ fontWeight: topic === "sport" ? "bold" : "normal" }}
-              >Sports</button>
+            >
+              Sports
+            </button>
           </li>
         </ul>
+        <select
+          className="topics__dropdown"
+          value={topic}
+          onChange={handleSelectChange}
+        >
+          <option value="politics">Politics</option>
+          <option value="business">Business</option>
+          <option value="entertainment">Entertainmeent</option>
+          <option value="tech">Technology</option>
+          <option value="sport">Sports</option>
+        </select>
       </div>
       {loading ? (
         <div className="spinner">
