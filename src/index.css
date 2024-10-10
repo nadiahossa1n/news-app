@@ -26,10 +26,6 @@ li {
   list-style: none;
 }
 
-.blue {
-  color: #ff3a44;
-}
-
 .nav__container {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -267,8 +263,12 @@ li {
     gap: 4px;
     align-items: center;
   }
+  .article__card {
+    flex-direction: column;
+  }
   .article__card img {
-    width: 48%;
+    max-width: 500px;
+    padding: 16px;
   }
   .article__date {
     font-size: 14px;
